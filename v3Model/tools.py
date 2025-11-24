@@ -356,69 +356,6 @@ def calculate_risk_score(url: str, evidence: str) -> str:
         return f"風險評分計算失敗：{str(e)}"
 
 
-@tool
-def generate_page_summary(text: str) -> str:
-    """生成頁面內容的智能摘要。
-    
-    分析頁面文字內容，提取關鍵資訊並生成簡潔摘要。
-    
-    Args:
-        text: 頁面文字內容
-        
-    Returns:
-        頁面摘要（繁體中文，最多150字）
-    """
-    if not text or len(text) < 50:
-        return "內容過少，無法生成摘要"
-    
-    try:
-        # 提取關鍵資訊
-        # 1. 標題（通常在開頭或包含關鍵字）
-        title_match = re.search(r"<title>(.*?)</title>", text, re.IGNORECASE)
-        title = title_match.group(1) if title_match else ""
-        
-        # 2. 提取前200字作為主要內容
-        visible_text = re.sub(r"<[^>]+>", "", text)
-        visible_text = visible_text.strip()
-        
-        # 3. 提取關鍵詞（常見的網站類型關鍵字）
-        keywords = []
-        if re.search(r"登入|登錄|login|sign in", text, re.IGNORECASE):
-            keywords.append("登入頁面")
-        if re.search(r"驗證|verify|confirm", text, re.IGNORECASE):
-            keywords.append("驗證功能")
-        if re.search(r"帳戶|帳號|account", text, re.IGNORECASE):
-            keywords.append("帳戶相關")
-        if re.search(r"付款|支付|payment|pay", text, re.IGNORECASE):
-            keywords.append("付款相關")
-        if re.search(r"更新|update|upgrade", text, re.IGNORECASE):
-            keywords.append("更新提示")
-        
-        # 4. 生成摘要
-        summary_parts = []
-        
-        if title:
-            summary_parts.append(f"標題：{title[:50]}")
-        
-        if keywords:
-            summary_parts.append(f"功能：{'、'.join(keywords[:3])}")
-        
-        # 提取主要文字內容（去除 HTML 標籤後的前100字）
-        main_content = visible_text[:100].replace("\n", " ").strip()
-        if main_content:
-            summary_parts.append(f"內容：{main_content}...")
-        
-        if summary_parts:
-            summary = " | ".join(summary_parts)
-            # 限制長度
-            if len(summary) > 150:
-                summary = summary[:147] + "..."
-            return summary
-        else:
-            return "無法提取有效摘要資訊"
-            
-    except Exception as e:
-        return f"摘要生成失敗：{str(e)}"
 
 
 @tool

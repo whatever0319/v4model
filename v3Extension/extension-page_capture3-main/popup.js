@@ -92,17 +92,6 @@
             riskScoreHtml = `<span class="risk-score ${riskClass}">風險評分：${score}/100 (${riskText})</span>`;
         }
         
-        // 頁面摘要顯示
-        let summaryHtml = "";
-        if (result.page_summary) {
-            summaryHtml = `
-                <div class="info-section">
-                    <div class="info-title">📄 頁面摘要</div>
-                    <div>${result.page_summary}</div>
-                </div>
-            `;
-        }
-        
         // 相似網站檢測顯示
         let similarSiteHtml = "";
         if (result.similar_site_detection) {
@@ -121,7 +110,6 @@
             </div>
             <br>
             <div><b>理由：</b><br>${result.explanation}</div>
-            ${summaryHtml}
             ${similarSiteHtml}
             <br>
             <div style="font-size: 11px; color: #666;"><b>耗時：</b> ${elapsed} 秒</div>

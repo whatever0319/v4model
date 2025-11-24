@@ -17,7 +17,6 @@ from tools import (
     extract_contact_info,
     detect_language_anomaly,
     calculate_risk_score,
-    generate_page_summary,
     detect_similar_sites,
 )
 
@@ -117,7 +116,6 @@ def _build_chain():
         extract_contact_info,
         detect_language_anomaly,
         calculate_risk_score,
-        generate_page_summary,
         detect_similar_sites,
     ])
 
@@ -139,7 +137,6 @@ def _build_chain():
 
 【額外欄位】
 - risk_score: 從 Evidence 中的「風險評分」提取數字（0-100），如果沒有則設為 null
-- page_summary: 從 Evidence 中的「頁面摘要」提取，如果沒有則設為 null
 - similar_site_detection: 從 Evidence 中的「相似網站檢測」提取，如果沒有則設為 null
 """),
 
@@ -181,11 +178,6 @@ def analyze_deep(text: str) -> dict:
         })
         evidence_dict["風險評分"] = risk_score_result
 
-    # 生成頁面摘要
-    summary_result = generate_page_summary.invoke({"text": text[:2000]})
-    if summary_result and "無法" not in summary_result:
-        evidence_dict["頁面摘要"] = summary_result
-
     # Format Evidence → 傳給 LLM
     evidence_text = (
         "\n".join(f"{k}: {v}" for k, v in evidence_dict.items())
@@ -217,9 +209,6 @@ def analyze_deep(text: str) -> dict:
         if score_match:
             risk_score_value = int(score_match.group(1))
 
-    # 提取頁面摘要
-    page_summary_value = parsed.get("page_summary") or summary_result
-
     # 提取相似網站檢測
     similar_site_value = parsed.get("similar_site_detection")
     if not similar_site_value and "相似網站檢測" in evidence_dict:
@@ -232,6 +221,5 @@ def analyze_deep(text: str) -> dict:
         "explanation": explanation_final,
         "elapsed_time": elapsed,
         "risk_score": risk_score_value,
-        "page_summary": page_summary_value if page_summary_value and "無法" not in page_summary_value else None,
         "similar_site_detection": similar_site_value if similar_site_value and "未發現" not in similar_site_value else None,
     }

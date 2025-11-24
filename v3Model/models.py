@@ -17,7 +17,6 @@ class SimplePhishingAnalysis(BaseModel):
     is_potential_phishing: bool
     explanation: str
     risk_score: Optional[int] = Field(None, description="風險評分（0-100）")
-    page_summary: Optional[str] = Field(None, description="頁面摘要")
     similar_site_detection: Optional[str] = Field(None, description="相似網站檢測結果")
 
 
