@@ -1,0 +1,141 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            width: 400px;
+            padding: 10px;
+            font-family: Arial;
+        }
+        #result {
+            margin-top: 10px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .risk-score {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        .risk-low { background-color: #d4edda; color: #155724; }
+        .risk-medium { background-color: #fff3cd; color: #856404; }
+        .risk-high { background-color: #f8d7da; color: #721c24; }
+        .risk-very-high { background-color: #f5c6cb; color: #721c24; }
+        .info-section {
+            margin-top: 12px;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-left: 3px solid #007bff;
+            font-size: 12px;
+        }
+        .info-title {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 4px;
+        }
+        .row {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 6px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        #status_detail {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #555;
+            min-height: 16px;
+            white-space: pre-line;
+        }
+
+        #blacklist_container {
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-size: 12px;
+        }
+
+        #bl_toggle {
+            cursor: pointer;
+            font-weight: bold;
+            user-select: none;
+        }
+
+        #bl_input {
+            width: 180px;
+            padding: 3px;
+            font-size: 12px;
+        }
+
+        #bl_add {
+            padding: 4px 8px;
+            font-size: 12px;
+            margin-left: 4px;
+            cursor: pointer;
+        }
+        #bl_clear_all {
+            padding: 4px 8px;
+            font-size: 12px;
+            margin-left: 4px;
+            cursor: pointer;
+            color: red;
+        }
+
+        .bl-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 4px 0;
+            font-size: 12px;
+        }
+
+        .bl-del {
+            cursor: pointer;
+            color: red;
+            margin-left: 6px;
+        }
+
+            .bl-del:hover {
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div>網頁擷取</div>
+        <div id="status">—</div>
+    </div>
+    <div class="row">
+        <button id="toggleBtn">開關</button>
+        <button id="manualBtn">擷取</button>
+    </div>
+    <div id="status_detail"></div>
+    <div id="result">尚未有分析資料。</div>
+    <!-- 黑名單 -->
+    <div id="blacklist_container">
+        <div id="bl_toggle">使用者黑名單 ▼</div>
+        <div id="bl_section" style="display: none; margin-top: 8px;">
+            <div class="row" style="margin-top: 6px;">
+                <button id="bl_add">
+                    將當前頁面加入黑名單
+                </button>
+            </div>
+            <div class="row" style="margin-top: 6px;">
+                <button id="bl_clear_all">
+                    清空所有黑名單
+                </button>
+            </div>
+            <div id="blacklist_list">(正在讀取使用者黑名單中...)</div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

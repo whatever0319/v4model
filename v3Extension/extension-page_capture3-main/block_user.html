@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>⚠️ 使用者黑名單警告</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #fff8d5;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #e6a500;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            display: inline-block;
+            max-width: 520px;
+        }
+
+        button {
+            padding: 10px 18px;
+            margin-top: 20px;
+            border: none;
+            background: #d4a200;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .target {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #555;
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>⚠️ 使用者黑名單網站</h1>
+        <p>此網址是你自行加入的高風險網站。</p>
+
+        <div class="target" id="targetText"></div>
+
+        <button id="go">仍要前往</button>
+    </div>
+    <script src="block_user.js"></script>
+</body>
+</html>
